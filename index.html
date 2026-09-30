@@ -324,25 +324,6 @@ html.fp-on .timeline .step ul,html.fp-on .timeline .step p{font-size:1rem;line-h
 .pv-cta-row p{font-family:var(--serif);font-size:1.25rem;max-width:30em}
 @media (max-width:900px){.pv-grid-2,.fam{grid-template-columns:1fr}.pv-chart img{max-height:none}}
 
-/* ---------- Curseur personnalisé ---------- */
-.cursor-dot,.cursor-ring{position:fixed;left:0;top:0;pointer-events:none;z-index:9999;border-radius:50%;opacity:0;mix-blend-mode:difference;will-change:transform}
-.cursor-dot{width:6px;height:6px;margin:-3px 0 0 -3px;background:#fff;transition:opacity .2s,width .2s,height .2s,margin .2s}
-.cursor-ring{width:36px;height:36px;margin:-18px 0 0 -18px;border:1.5px solid #fff;display:grid;place-items:center;transition:opacity .25s,width .3s cubic-bezier(.2,.7,.2,1),height .3s cubic-bezier(.2,.7,.2,1),margin .3s cubic-bezier(.2,.7,.2,1),background-color .3s,border-width .3s}
-.cursor-ring span{font:600 .68rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#000;opacity:0;transition:opacity .2s}
-html.has-cursor .cursor-dot,html.has-cursor .cursor-ring{opacity:1}
-html.has-cursor.cursor-out .cursor-dot,html.has-cursor.cursor-out .cursor-ring,html.has-cursor.cursor-hidden .cursor-dot,html.has-cursor.cursor-hidden .cursor-ring{opacity:0}
-html.cursor-hover .cursor-ring{width:58px;height:58px;margin:-29px 0 0 -29px;border-width:1px;background:rgba(255,255,255,.12)}
-html.cursor-hover .cursor-dot{width:0;height:0;margin:0}
-html.cursor-label .cursor-ring{width:86px;height:86px;margin:-43px 0 0 -43px;background:rgba(255,255,255,.94);border-width:0;mix-blend-mode:normal;box-shadow:0 8px 30px rgba(2,30,40,.25)}
-html.cursor-label .cursor-ring span{color:#022e3d}
-html.cursor-label .cursor-ring span{opacity:1}
-html.cursor-label .cursor-dot{width:0;height:0;margin:0}
-html.cursor-down .cursor-ring{width:26px;height:26px;margin:-13px 0 0 -13px}
-html.has-cursor,html.has-cursor *{cursor:none!important}
-html.has-cursor input:not([type=checkbox]):not([type=radio]),html.has-cursor textarea{cursor:text!important}
-html.has-cursor select{cursor:default!important}
-html.has-cursor dialog[open],html.has-cursor dialog[open] *{cursor:auto!important}
-html.has-cursor dialog[open] a,html.has-cursor dialog[open] button{cursor:pointer!important}
 
 
 /* ---------- Contact immersif ---------- */
@@ -447,25 +428,27 @@ html.has-cursor dialog[open] a,html.has-cursor dialog[open] button{cursor:pointe
 .chip sup{font-size:.68em;margin-left:4px;opacity:.6;vertical-align:super}
 .rz-body{padding-block:clamp(28px,4vw,48px) clamp(64px,9vw,120px)}
 .rz-body .count{margin:0 0 clamp(20px,3vw,32px)}
-.rz-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(36px,4.4vw,64px) clamp(18px,2.2vw,32px)}
-.ptile{grid-column:span 4;display:flex;flex-direction:column;text-decoration:none;color:inherit;animation:rz-in .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*60ms);content-visibility:auto;contain-intrinsic-size:auto 420px}
-.ptile.s7{grid-column:span 7}.ptile.s5{grid-column:span 5}
-.ptile-img{position:relative;overflow:hidden;background:var(--bg-alt);height:clamp(220px,23vw,330px)}
-.ptile.s7 .ptile-img,.ptile.s5 .ptile-img{height:clamp(260px,33vw,480px)}
+.rz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:clamp(28px,3.4vw,44px) clamp(16px,2vw,28px)}
+.ptile{min-width:0}
+.ptile-meta h3,.ptile-cat,.ptile-meta p{overflow-wrap:anywhere}
+.ptile{display:flex;flex-direction:column;text-decoration:none;color:inherit;animation:rz-in .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*60ms);content-visibility:auto;contain-intrinsic-size:auto 420px}
+.ptile-img{position:relative;overflow:hidden;background:var(--bg-alt);aspect-ratio:4/3}
 .ptile-img img{width:100%;height:100%;object-fit:cover;transform:scale(1.02);transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
 .ptile:hover .ptile-img img{transform:scale(1.08)}
 .ptile-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,30,40,0) 50%,rgba(2,30,40,.5));opacity:0;transition:opacity .5s}
 .ptile:hover .ptile-img::after{opacity:1}
-.ptile-meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:16px}
-.ptile-meta h3{font-size:clamp(1.15rem,1.5vw,1.4rem);font-weight:400;position:relative}
+.ptile-meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:12px}
+.rz-more{display:flex;justify-content:center;margin-top:clamp(32px,4vw,52px)}
+.rz-more button{padding:1em 2.2em}
+.rz-more[hidden]{display:none}
+.ptile-meta h3{font-size:clamp(1.02rem,1.2vw,1.2rem);font-weight:400;position:relative}
 .ptile-meta h3::after{content:"";position:absolute;left:0;bottom:-3px;height:1px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:0 50%;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
 .ptile:hover .ptile-meta h3::after{transform:scaleX(1)}
 .ptile-meta p{color:var(--ink-2);font-size:.92rem;white-space:nowrap}
 .ptile-cat{margin-top:4px;font-size:.85rem;color:var(--ink-2)}
 @keyframes rz-in{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
 @keyframes rz-clip{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
-@media (max-width:980px){.ptile,.ptile.s7,.ptile.s5{grid-column:span 6}.ptile.s7 .ptile-img,.ptile.s5 .ptile-img{height:clamp(220px,40vw,360px)}}
-@media (max-width:620px){.ptile,.ptile.s7,.ptile.s5{grid-column:1/-1}.ptile-img,.ptile.s7 .ptile-img,.ptile.s5 .ptile-img{height:auto;aspect-ratio:16/10}.rz-bar{position:static}}
+@media (max-width:620px){.rz-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 14px}.ptile-meta h3{font-size:1rem}.ptile-meta p,.ptile-cat{font-size:.82rem}}
 
 
 /* ---------- Services : panneaux immersifs ---------- */
@@ -1114,7 +1097,7 @@ const NOTES = {
 const $ = (s,el=document)=>el.querySelector(s);
 const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const PHOTOS_SRC='photos.js';
+const PHOTOS_SRC='';
 let photosPending = !!PHOTOS_SRC && PHOTOS_SRC!=='__PHOTOS_'+'SRC__';
 function ensurePhotos(cb){
   if(!photosPending) return cb&&cb();
@@ -1141,7 +1124,7 @@ const arrowSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13
 const chevron = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4.5l7.5 7.5L9 19.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 // Choix de design : les animations du site sont actives pour tous, même si l'ordinateur a désactivé les effets d'animation.
 const reduceMotion = false;
-const state = {route:{page:'home'},cat:'Tous',mission:'Toutes',newsFilter:'Tout',userPosts:[],slide:0,timer:null,pvIO:[],marqueeCleanup:null,fpCleanup:null,cleanups:[],view:'grid'};
+const state = {route:{page:'home'},cat:'Tous',mission:'Toutes',newsFilter:'Tout',shown:15,userPosts:[],slide:0,timer:null,pvIO:[],marqueeCleanup:null,fpCleanup:null,cleanups:[],view:'grid'};
 
 let toastTimer;
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3200);}
@@ -1149,7 +1132,7 @@ function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show'
 const logoFull = `<a class="logo full" href="#/" aria-label="ARCOS, accueil"><img class="logo-mark" src="${imgSrc('icon')}" alt=""><span class="logo-bar" aria-hidden="true"></span><span><span class="logo-word" aria-hidden="true"><span>AR</span><span>COS</span></span><span class="logo-tag">Ingénierie &amp; suivi<br>de projets techniques</span></span></a>`;
 
 const tile = (p,wide=false) => `
-  <a class="tile${wide?' wide':''}" href="#/realisations/${p.slug}" data-cursor="Voir">
+  <a class="tile${wide?' wide':''}" href="#/realisations/${p.slug}">
     <div class="tile-img${p.wip?' is-wip':''}">${img(thumbKey(p),p.name)}${p.wip?wipTag:''}<span class="tile-chip" title="${esc(MISSION[p.mission].full)}">${p.mission}</span></div>
     <div class="tile-text"><h3>${esc(p.name)}</h3><p>${esc(p.client)}${metric(p)?', '+metric(p):''}</p></div>
   </a>`;
@@ -1210,14 +1193,14 @@ PAGES.home = () => {
           <div><b data-count="${clients}" data-prefix="" data-suffix="">0</b><span>maîtres d’ouvrage</span></div>
         </div>
       </div>
-      <a class="bx bx-photo bx-real" href="#/realisations" data-cursor="Voir" style="--i:1">
+      <a class="bx bx-photo bx-real" href="#/realisations" style="--i:1">
         <div class="bx-slides" aria-hidden="true">${HOME_REAL.map((k,i)=>img('p_'+k,'',i===0?'on':'')).join('')}</div>
         <span class="bx-count">${PROJECTS.length} OPÉRATIONS</span>${arrow}
         <span class="bx-k">Portfolio</span>
         <h3>Réalisations</h3>
         <p>De la rénovation de bureaux aux ombrières solaires.</p>
       </a>
-      <a class="bx bx-photo bx-pv" href="#/photovoltaique" data-cursor="Voir" style="--i:2">
+      <a class="bx bx-photo bx-pv" href="#/photovoltaique" style="--i:2">
         ${img('parking','')}${arrow}
         <span class="bx-k">Expertise</span>
         <h3>Ombrières photo&shy;voltaïques</h3>
@@ -1447,6 +1430,7 @@ PAGES.realisations = (arg,q) => {
     <section class="wrap rz-body">
       <p class="count" id="count" aria-live="polite"></p>
       <div id="grid"></div>
+      <div class="rz-more" id="rz-more" hidden><button type="button" class="btn btn-line" id="rz-more-btn"></button></div>
     </section>
     ${ctaBand()}
   </div>`, mount:mountProjects};
@@ -2003,42 +1987,6 @@ function mountFullpage(){
     html.classList.remove('fp-on'); resumeLenis();
   };
 }
-function initCursor(){
-  if(!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
-  const html=document.documentElement;
-  const dot=document.createElement('div'); dot.className='cursor-dot'; dot.setAttribute('aria-hidden','true');
-  const ring=document.createElement('div'); ring.className='cursor-ring'; ring.setAttribute('aria-hidden','true'); ring.innerHTML='<span></span>';
-  document.body.append(dot,ring);
-  let mx=-100,my=-100,rx=-100,ry=-100,started=false;
-  const HOVER='a,button,[role=tab],label,.chip,summary,input[type=checkbox],input[type=radio],.metier,.fp-dots button';
-  const TEXT='input:not([type=checkbox]):not([type=radio]),textarea,select,dialog';
-  document.addEventListener('mousemove',e=>{
-    mx=e.clientX; my=e.clientY;
-    if(!started){ started=true; rx=mx; ry=my; html.classList.add('has-cursor'); }
-    html.classList.remove('cursor-out');
-  },{passive:true});
-  document.addEventListener('mouseover',e=>{
-    const t=e.target;
-    const label=t.closest&&t.closest('[data-cursor]');
-    html.classList.toggle('cursor-hidden',!!(t.closest&&t.closest(TEXT)));
-    html.classList.toggle('cursor-label',!!label);
-    html.classList.toggle('cursor-hover',!label&&!!(t.closest&&t.closest(HOVER)));
-    if(label) ring.firstChild.textContent=label.dataset.cursor;
-  });
-  document.documentElement.addEventListener('mouseleave',()=>html.classList.add('cursor-out'));
-  document.addEventListener('mousedown',()=>html.classList.add('cursor-down'));
-  document.addEventListener('mouseup',()=>html.classList.remove('cursor-down'));
-  let running=false;
-  const loop=()=>{
-    rx+=(mx-rx)*.2; ry+=(my-ry)*.2;
-    dot.style.transform=`translate3d(${mx}px,${my}px,0)`;
-    ring.style.transform=`translate3d(${rx}px,${ry}px,0)`;
-    if(Math.abs(mx-rx)<.2&&Math.abs(my-ry)<.2){ running=false; return; }
-    requestAnimationFrame(loop);
-  };
-  const wake=()=>{ if(!running){ running=true; requestAnimationFrame(loop); } };
-  document.addEventListener('mousemove',wake,{passive:true});
-}
 function mountPhotovoltaique(){
   state.pvIO.forEach(io=>io.disconnect()); state.pvIO=[];
   mountTrust();
@@ -2068,29 +2016,34 @@ function mountServices(){
   });
   state.cleanups.push(()=>clearTimeout(t));
 }
+const PAGE_SIZE=15;
 function renderGrid(){
   const list=PROJECTS.filter(p=>(state.cat==='Tous'||p.cat===state.cat)&&(state.mission==='Toutes'||p.mission===state.mission));
   const g=$('#grid');
+  const shown=Math.min(list.length, state.shown||PAGE_SIZE);
+  const more=$('#rz-more'), moreBtn=$('#rz-more-btn');
+  if(more){ const rest=list.length-shown; more.hidden=rest<=0; if(rest>0) moreBtn.textContent=`Voir plus (${rest} restante${rest>1?'s':''})`; }
   if(!list.length){
     g.className='';
     g.innerHTML='<p class="empty">Aucune réalisation ne correspond à ces filtres. Essayez « Toutes » ou « Tous ».</p>';
   } else {
     g.className='rz-grid';
-    g.innerHTML=list.map((p,i)=>{
-      const k=i%5, cyc=Math.floor(i/5)%2; const size=k<2?((k===0)!==(cyc===1)?'s7':'s5'):'';
-      return `<a class="ptile ${size}" href="#/realisations/${p.slug}" data-cursor="Voir" style="--i:${i}">
+    g.innerHTML=list.slice(0,shown).map((p,i)=>{
+      return `<a class="ptile" href="#/realisations/${p.slug}" style="--i:${i%PAGE_SIZE}">
         <div class="ptile-img${p.wip?' is-wip':''}">${img(thumbKey(p),p.name,'',i>5?'loading="lazy"':'')}${p.wip?wipTag:''}<span class="tile-chip" title="${esc(MISSION[p.mission].full)}">${p.mission}</span>${p.wip?'<span class="tile-chip wip-chip">En cours</span>':''}</div>
         <div class="ptile-meta"><h3>${esc(p.name)}</h3><p>${metric(p)}</p></div>
         <p class="ptile-cat">${esc(p.client)} · ${esc(p.cat)}</p></a>`;}).join('');
   }
-  $('#count').textContent = `${list.length} réalisation${list.length>1?'s':''}`;
+  $('#count').textContent = shown<list.length ? `${shown} sur ${list.length} réalisations` : `${list.length} réalisation${list.length>1?'s':''}`;
   if(lenis) lenis.resize();
 }
 function mountProjects(){
   renderGrid();
   mountCounters();
+  const mb=$('#rz-more-btn');
+  if(mb) mb.addEventListener('click',()=>{ state.shown=(state.shown||PAGE_SIZE)+PAGE_SIZE; renderGrid(); });
   $$('[data-f]').forEach(b=>b.addEventListener('click',()=>{
-    state[b.dataset.f]=b.dataset.v;
+    state[b.dataset.f]=b.dataset.v; state.shown=PAGE_SIZE;
     $$(`[data-f="${b.dataset.f}"]`).forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===b.dataset.v)));
     renderGrid();
   }));
@@ -2262,7 +2215,6 @@ function warmImages(){
 }
 setTimeout(()=>{ warmImages(); setTimeout(()=>ensurePhotos(),1500); },900);
 initLenis();
-initCursor();
 $('#post-dialog').addEventListener('close',resumeLenis);
 window.addEventListener('hashchange',()=>route());
 window.addEventListener('scroll',updateHeader,{passive:true});
