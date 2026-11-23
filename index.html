@@ -2064,22 +2064,29 @@ function mountServices(){
   state.cleanups.push(()=>clearTimeout(t));
 }
 const PAGE_SIZE=15;
-function renderGrid(){
+function ptileHTML(p,i,stagger){
+  return `<a class="ptile" href="#/realisations/${p.slug}" style="--i:${stagger}">
+        <div class="ptile-img${p.wip?' is-wip':''}">${img(thumbKey(p),p.name,'',i>5?'loading="lazy"':'')}${p.wip?wipTag:''}<span class="tile-chip" title="${esc(MISSION[p.mission].full)}">${p.mission}</span>${p.wip?'<span class="tile-chip wip-chip">En cours</span>':''}</div>
+        <div class="ptile-meta"><h3>${esc(p.name)}</h3><p>${metric(p)}</p></div>
+        <p class="ptile-cat">${esc(p.client)} · ${esc(p.cat)}</p></a>`;
+}
+function renderGrid(append){
   const list=PROJECTS.filter(p=>(state.cat==='Tous'||p.cat===state.cat)&&(state.mission==='Toutes'||p.mission===state.mission));
   const g=$('#grid');
   const shown=Math.min(list.length, state.shown||PAGE_SIZE);
   const more=$('#rz-more'), moreBtn=$('#rz-more-btn');
   if(more){ const rest=list.length-shown; more.hidden=rest<=0; if(rest>0) moreBtn.textContent=`Voir plus (${rest} restante${rest>1?'s':''})`; }
-  if(!list.length){
+  const already = g.classList.contains('rz-grid') ? g.children.length : 0;
+  if(append && already && shown>already){
+    /* n'ajoute que le nouveau lot : les tuiles déjà affichées gardent leur noeud DOM,
+       donc pas de rejeu d'animation ni de saut de page. La cascade repart a 0 sur le lot. */
+    g.insertAdjacentHTML('beforeend', list.slice(already,shown).map((p,k)=>ptileHTML(p,already+k,k)).join(''));
+  } else if(!list.length){
     g.className='';
     g.innerHTML='<p class="empty">Aucune réalisation ne correspond à ces filtres. Essayez « Toutes » ou « Tous ».</p>';
   } else {
     g.className='rz-grid';
-    g.innerHTML=list.slice(0,shown).map((p,i)=>{
-      return `<a class="ptile" href="#/realisations/${p.slug}" style="--i:${i%PAGE_SIZE}">
-        <div class="ptile-img${p.wip?' is-wip':''}">${img(thumbKey(p),p.name,'',i>5?'loading="lazy"':'')}${p.wip?wipTag:''}<span class="tile-chip" title="${esc(MISSION[p.mission].full)}">${p.mission}</span>${p.wip?'<span class="tile-chip wip-chip">En cours</span>':''}</div>
-        <div class="ptile-meta"><h3>${esc(p.name)}</h3><p>${metric(p)}</p></div>
-        <p class="ptile-cat">${esc(p.client)} · ${esc(p.cat)}</p></a>`;}).join('');
+    g.innerHTML=list.slice(0,shown).map((p,i)=>ptileHTML(p,i,i%PAGE_SIZE)).join('');
   }
   $('#count').textContent = shown<list.length ? `${shown} sur ${list.length} réalisations` : `${list.length} réalisation${list.length>1?'s':''}`;
   if(lenis) lenis.resize();
@@ -2088,7 +2095,7 @@ function mountProjects(){
   renderGrid();
   mountCounters();
   const mb=$('#rz-more-btn');
-  if(mb) mb.addEventListener('click',()=>{ state.shown=(state.shown||PAGE_SIZE)+PAGE_SIZE; renderGrid(); });
+  if(mb) mb.addEventListener('click',()=>{ state.shown=(state.shown||PAGE_SIZE)+PAGE_SIZE; renderGrid(true); });
   $$('[data-f]').forEach(b=>b.addEventListener('click',()=>{
     state[b.dataset.f]=b.dataset.v; state.shown=PAGE_SIZE;
     $$(`[data-f="${b.dataset.f}"]`).forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===b.dataset.v)));
